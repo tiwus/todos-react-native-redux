@@ -1,26 +1,52 @@
 import React from "react";
-import { 
-  FlatList,
-  StyleSheet
-} from "react-native";
-import TodoItem from '../components/TodoItem';
+import { FlatList, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import TodoItem from "../components/TodoItem";
+import { toggleTodo } from "../redux/actions/todos";
+import { SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED } from "../redux/actions/types";
 
-const VisibleTodo = (props) => {
-  _renderItem = ({item, index}) => <TodoItem todo={item} />
+const VisibleTodo = props => {
+  _renderItem = ({ item, index }) => (
+    <TodoItem todo={item} toggleTodo={() => props.toggleTodo(item.id)} />
+  );
   return (
-    <FlatList 
+    <FlatList
       style={styles.container}
-      data={[{key: 'a'}, {key: 'b'}]}
+      data={props.todos}
       keyExtractor={(item, index) => index.toString()}
       renderItem={this._renderItem}
     />
-  )
-}
+  );
+};
 
-export default VisibleTodo;
+const getVisibleTodo = (todos, filter) => {
+  switch (filter) {
+    case SHOW_ALL:
+      return todos;
+    case SHOW_ACTIVE:
+      return todos.filter(todo => !todo.completed);
+    case SHOW_COMPLETED:
+      return todos.filter(todo => todo.completed);
+    default:
+      throw new Error("Unknown filter: " + filter);
+  }
+};
+
+const mapStateToProps = state => ({
+  todos: getVisibleTodo(state.todos, state.visibilityFilter)
+});
+
+const mapDispatchToProps = dispatch => ({
+  toggleTodo: id => dispatch(toggleTodo(id))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(VisibleTodo);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });

@@ -2,12 +2,16 @@ import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import TodoItem from "../components/TodoItem";
-import { toggleTodo } from "../redux/actions/todos";
+import { toggleTodo, confirmDelete } from "../redux/actions/todos";
 import { SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED } from "../redux/actions/types";
 
 const VisibleTodo = props => {
   _renderItem = ({ item, index }) => (
-    <TodoItem todo={item} toggleTodo={() => props.toggleTodo(item.id)} />
+    <TodoItem
+      todo={item}
+      toggleTodo={() => props.toggleTodo(item.id)}
+      onDelete={() => props.onDelete(item.id)}
+    />
   );
   return (
     <FlatList
@@ -37,7 +41,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleTodo: id => dispatch(toggleTodo(id))
+  toggleTodo: id => dispatch(toggleTodo(id)),
+  onDelete: id => dispatch(confirmDelete(id))
 });
 
 export default connect(

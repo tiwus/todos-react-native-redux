@@ -1,26 +1,49 @@
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 
-const TodoItem = ({ todo, toggleTodo }) => (
-  <TouchableOpacity onPress={toggleTodo}>
-    <Text
+const TodoItem = ({ todo, toggleTodo, onDelete }) => (
+  <View
+    style={{
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingHorizontal: 10,
+      paddingVertical: 5
+    }}
+  >
+    <TouchableOpacity onPress={toggleTodo}>
+      <Text
+        numberOfLines={1}
+        style={{
+          width: 300,
+          fontSize: 18,
+          textDecorationLine: todo.completed ? "line-through" : "none"
+        }}
+      >
+        {todo.text}
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
       style={{
-        fontSize: 16,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        textDecorationLine: todo.completed ? "line-through" : "none"
+        width: 20,
+        height: 20,
+        borderwidth: 1,
+        borderRadius: 50,
+        backgroundColor: "red",
+        alignItems: "center",
+        marginTop: 5
       }}
+      onPress={onDelete}
     >
-      {todo.text}
-    </Text>
-  </TouchableOpacity>
+      <Text
+        style={{
+          fontSize: 12,
+          color: "white"
+        }}
+      >
+        X
+      </Text>
+    </TouchableOpacity>
+  </View>
 );
-export default TodoItem;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+export default TodoItem;

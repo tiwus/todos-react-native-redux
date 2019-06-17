@@ -7,16 +7,11 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
-import { addTodo } from "../redux/actions/todos";
+import { addTodo, changedText } from "../redux/actions/todos";
 
 class AddTodo extends React.Component {
-  state = {
-    text: ""
-  };
-
   render() {
-    const { text } = this.state;
-    const { addTodo } = this.props;
+    const { text, addTodo, onChangeText } = this.props;
     return (
       <View style={styles.container}>
         <View
@@ -28,7 +23,7 @@ class AddTodo extends React.Component {
         >
           <TextInput
             style={{ paddingHorizontal: 10 }}
-            onChangeText={text => this.setState({ text })}
+            onChangeText={onChangeText}
             value={text}
             placeholder="Add Todo"
           />
@@ -36,7 +31,7 @@ class AddTodo extends React.Component {
         <TouchableOpacity
           onPress={() => addTodo(text)}
           style={{
-            backgroundColor: "blue",
+            backgroundColor: "#47b65c",
             height: 50,
             width: "15%",
             justifyContent: "center",
@@ -56,18 +51,23 @@ class AddTodo extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  text: state.text_reducer
+});
+
 const mapDispatchToProps = dispatch => ({
-  addTodo: text => dispatch(addTodo(text))
+  addTodo: text => dispatch(addTodo(text)),
+  onChangeText: text => dispatch(changedText(text))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AddTodo);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "grey",
+    backgroundColor: "#ccc",
     flexDirection: "row",
     marginBottom: 10
   }

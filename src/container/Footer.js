@@ -6,7 +6,7 @@ import { SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED } from "../redux/actions/types";
 const Footer = () => (
   <View style={styles.container}>
     <FooterLink filter={SHOW_ALL}>
-      <Text style={styles.title}>ALL</Text>
+      <Text style={styles.title}>All</Text>
     </FooterLink>
     <FooterLink filter={SHOW_ACTIVE}>
       <Text style={styles.title}>Active</Text>

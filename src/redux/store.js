@@ -1,11 +1,11 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
+import thunk from "redux-thunk";
 
 import rootReducers from "./reducers";
 
-const store = createStore(rootReducers);
+const middleware = applyMiddleware(thunk, createLogger());
 
-// debug
-
-store.subscribe(() => console.log("SUBSCRIBE", store.getState()));
+const store = createStore(rootReducers, middleware);
 
 export default store;

@@ -11,7 +11,7 @@ const FooterLink = ({ activeBtn, toggleFilter, children }) => (
       alignItems: "center",
       width: "33.3%",
       height: 50,
-      backgroundColor: activeBtn ? "darkblue" : "#0000cc"
+      backgroundColor: activeBtn ? "#4888cf" : "#5f9fe7"
     }}
   >
     {children}

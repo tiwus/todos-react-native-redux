@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO } from "../actions/types";
+import { ADD_TODO, TOGGLE_TODO, DELETE_TODO } from "../actions/types";
 
 const initialState = [];
 
@@ -17,6 +17,8 @@ const todos = (state = initialState, action) => {
       return state.map(todo =>
         todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
       );
+    case DELETE_TODO:
+      return state.filter(todo => todo.id !== action.id);
     default:
       return state;
   }

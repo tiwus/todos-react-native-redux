@@ -16,6 +16,10 @@ export const addTodo = text => (dispatch, getState) => {
     todo => todo.text.toLowerCase() === text.toLowerCase()
   );
 
+  if (!text) {
+    return;
+  }
+
   if (todoExist) {
     alert(`Sory a new todo "${text}" is already exist`);
     dispatch(
